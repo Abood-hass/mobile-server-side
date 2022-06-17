@@ -12,6 +12,7 @@ router.post('/reigister', async (req, res) => {
 router.get('/login', async (req, res) => {
     var data = req.body
     var result = LoginExsistAccount(data.Email,data.Password);
+    console.log(result);
     res.send(result);
 })
 

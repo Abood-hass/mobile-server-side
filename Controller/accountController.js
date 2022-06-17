@@ -29,16 +29,22 @@ exports.ReigistNewAccount = (FirstName, LastName, Email, PhoneNumber1, PhoneNumb
       return result;
 }
 
-exports.LoginExsistAccount = (Email,Password) => {
-  try {   
+exports.LoginExsistAccount =  async (Email,Password) => {
+  try {  
+     
     var query = 
     "SELECT * FROM heroku_37bb97e0f5ae5b0.customeraccount WHERE email=? AND password=? and BanStatus='Unbanned';";
 
+    var  Result; 
     con.query(query, [Email,Password], function (err, result) {
       if (err) throw err;
-      console.log(result);
+      // Result = result;
+      console.log(Result);
+      return Result;
     });
 } catch (err) {
-  result = err;
+  Result = err;
 }
+return Result;
+
 }
