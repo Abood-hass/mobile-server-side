@@ -1,6 +1,7 @@
 const express = require('express');
 const { con } = require('./DB/dbConnection');
 const app = express()
+require('dotenv').config()
 const bodyParser = require('body-parser');
 const handleDisconnect = require('./DB/dbConnection')
 exports.router = express.Router();
@@ -16,7 +17,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 app.use('/user',urlencodedParser, logins);
 
   try {
-    app.listen(8080,console.log("NodeJS Connected"))
+    app.listen(process.env.PORT,console.log("NodeJS Connected"))
     function handleDisconnect () {
       connection = con; // Recreate the connection, since
                                                       // the old one cannot be reused.
