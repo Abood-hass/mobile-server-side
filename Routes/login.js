@@ -1,5 +1,5 @@
 const { router } = require('../app');
-const { ReigistNewAccount, LoginExsistAccount } = require('../Controller/userController');
+const { ReigistNewAccount, LoginExsistAccount } = require('../Controller/accountController');
 
 router.post('/reigister', async (req, res) => {
     var data = req.body
@@ -11,8 +11,8 @@ router.post('/reigister', async (req, res) => {
 
 router.get('/login', async (req, res) => {
     var data = req.body
-    LoginExsistAccount(data.Email,data.Password);
-    res.send("done")
+    var result = LoginExsistAccount(data.Email,data.Password);
+    res.send(result);
 })
 
 module.exports = router;
