@@ -5,16 +5,21 @@ require('dotenv').config()
 const bodyParser = require('body-parser');
 const handleDisconnect = require('./DB/dbConnection')
 exports.router = express.Router();
-const logins = require('./Routes/login')
+const loginsRoutes = require('./Routes/loginRoutes')
+const browsingRoutes = require('./Routes/browsingRoutes')
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: false }));
+
+
 
 // var jsonParser = bodyParser.json()
  
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-app.use('/user',urlencodedParser, logins);
+app.use('/user',urlencodedParser, loginsRoutes);
+app.use('/browse',urlencodedParser, browsingRoutes);
+// app.use('/browse',urlencodedParser, browsingRoutes);
 
   try {
     app.listen(process.env.PORT,console.log("NodeJS Connected"))

@@ -1,0 +1,17 @@
+{
+    "REGISTRATION WARNINGS":{
+        "FirstName":"First Name length from 3 to 10",
+        "LastName":"Last Name length from 3 to 10",
+        "Email":"Email number should be real Email",
+        "Email2":"Email Already in Use",
+        "Password":"Password length should be 8 to 15 characters",
+        "PhoneNumber1":"First Phone Number length should be 10 and numbers are allowed only",
+        "PhoneNumber2":"Second Phone Number length should be 10 (this number still optional)",
+        "Governorate":"Insert Governorate Correct",
+        "Neighborhood":"Insert Neighborhood Correct"
+    },
+    "LOGIN WARNINGS":{
+        "Email":"Make Sure Enter Your Email Correctly",
+        "Password":"Make Sure Enter Your Password Correctly"
+    }
+}
