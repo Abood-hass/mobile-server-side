@@ -1,21 +1,19 @@
 const { router } = require('../app');
-const { showAllRestaurants } = require('../Controller/browsingController');
+const { showAllRestaurants, showRestaurantsMenusAndMeals } = require('../Controller/browsingController');
+const { tokenAuthentication } = require('../Middleware/auth');
 
 
-router.get('/restaurants', (res, req) => {
-    showAllRestaurants();
+router.get('/restaurants', tokenAuthentication, (res, req) => {
+    showAllRestaurants(res, req);
 })
 
 
-router.get('/restaurants/:RId', (res, req) => {
-    var RId = req.params.RId;
-    showRestaurantsMenusAndMeals(RId);
+router.get('/restaurants/:RId', tokenAuthentication,(res, req) => {
+    showRestaurantsMenusAndMeals(res, req);
 })
 
-router.get('/restaurants/:RId/:MealID', (res, req) => {
-    var RId = req.params.RId;
-    var MealID = req.params.MealID;
-    showRestaurantsMenusAndMeals(RId);
+router.get('/restaurants/:RId/:MealID', tokenAuthentication,(res, req) => {
+    showRestaurantsMenusAndMeals(res, req);
 })
 
 module.exports = router;
