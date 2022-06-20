@@ -10,7 +10,8 @@ exports.showAllRestaurants = (res, req) => {
             "restaurants.AvailableStatus, categories.CategoryName " +
             "FROM heroku_37bb97e0f5ae5b0.restaurants " +
             "INNER JOIN categories " +
-            "ON categories.CategorytypeID = restaurants.CategoriesID ;"
+            "ON categories.CategorytypeID = restaurants.CategoriesID "+ 
+            "WHERE  !(restaurants.OwnerID is NULL) ;"
             // +"ORDER BY restaurants.RestaurantName ;"
             , function (err, result, fields) {
                 if (err) console.error(err);
