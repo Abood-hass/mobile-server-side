@@ -11,27 +11,40 @@ const browsingRoutes = require('./Routes/browsingRoutes');
 const { handleDisconnect } = require('./DB/dbConnection');
 const { orderMeals } = require('./Controller/orderingController');
 const { c } = require('smart-console');
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
 // var jsonParser = bodyParser.json()
- 
+
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-app.use('/user',urlencodedParser, loginsRoutes);
-app.use('/browse',urlencodedParser, browsingRoutes);
-app.use('/order',urlencodedParser, orderMeals);
+app.use('/user', urlencodedParser, loginsRoutes);
+app.use('/browse', urlencodedParser, browsingRoutes);
+app.use('/order', urlencodedParser, orderMeals);
 
-    
+function ServerConnect() {
   try {
-    app.listen(process.env.PORT,c.lG("\n\n\n>>>>>>>>>", WarningMessages['Database & Node Server']['Node_Started']))
- 
+    app.listen(process.env.PORT,
+      (err) => {
+        if (err) {
+          ServerConnect
+        }else{
+          c.lG("\n\n\n>>>>>>>>>", WarningMessages['Database & Node Server']['Node_Started'])
+
+        }
+
+      }
+    )
+    
+
     handleDisconnect();
   } catch (err) {
     console.log(err);
   }
-  
+}
 
-  
+ServerConnect()
+
+
