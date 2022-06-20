@@ -38,7 +38,8 @@ exports.showRestaurantsMenusAndMeals = (res, req) => {
             "INNER JOIN categories ON menuofmeals.CategorytypeID = categories.CategoryTypeID" +
             "INNER JOIN meals ON meals.MenuID = menuofmeals.MenuID" +
             "WHERE  menuofmeals.RestaurantID = ?" +
-            "ORDER BY meals.MealName;", [RId]
+            "ORDER BY meals.MealName;"
+            , [RId]
 
             , function (err, result, fields) {
                 if (err) console.error(err);

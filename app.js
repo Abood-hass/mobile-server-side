@@ -26,7 +26,7 @@ app.use('/order',urlencodedParser, orderMeals);
 
     
   try {
-    app.listen(process.env.PORT,c.lG("\n\n\n", WarningMessages['Database & Node Server']['Node_Started']))
+    app.listen(process.env.PORT,c.lG("\n\n\n>>>>>>>>>", WarningMessages['Database & Node Server']['Node_Started']))
  
     handleDisconnect();
   } catch (err) {
