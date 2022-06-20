@@ -1,8 +1,8 @@
 const { router } = require('../app');
-const { check, validationResult } = require('express-validator');
-const { ReigistNewAccount, LoginExsistAccount } = require('../Controller/loginController');
+const { check } = require('express-validator');
+const { ReigistNewAccount, LoginExsistAccount, logout } = require('../Controller/loginController');
 const WarningMessages = require('../Resources/WarningMessages.json');
-const { CheckerEmail } = require('../Middleware/DBValidation');
+// const { CheckerEmail } = require('../Middleware/DBValidation');
 
 const UserRegistrationValidator = [
     check('FirstName', WarningMessages['REGISTRATION WARNINGS']['FirstName'])
@@ -16,14 +16,20 @@ const UserRegistrationValidator = [
     check('PhoneNumber1', WarningMessages['REGISTRATION WARNINGS']['PhoneNumber1'])
         .isLength({ min: 10, max: 10 }).isNumeric(),
     check('PhoneNumber2')
-        .isNumeric()
         .custom((value) => {
-            if (value.length !== 0 && value.length !== 10) {
-                return Promise.reject(WarningMessages['REGISTRATION WARNINGS']['PhoneNumber2']);
+            if ((value.length !== 0 && value.length !== 10)) {
+                return Promise.reject(
+                    WarningMessages['REGISTRATION WARNINGS']['PhoneNumber2']
+                );
+            } else if (!(/^[0-9]+$/.test(value)) && value.length === 10) {
+                return Promise.reject(
+                    WarningMessages['REGISTRATION WARNINGS']['PhoneNumber2']
+                );
             } else {
                 return true;
             }
-        }),
+        }
+        ),
     check('Governorate', WarningMessages['REGISTRATION WARNINGS']['Governorate'])
         .isLength({ min: 3 }),
     check('Neighborhood', WarningMessages['REGISTRATION WARNINGS']['Neighborhood'])
@@ -40,7 +46,7 @@ const UserLoginValidator = [
 
 
 router.post('/reigister',
-     [UserRegistrationValidator],
+    [UserRegistrationValidator],
     async (req, res) => {
         // var data = req.body
 
@@ -54,6 +60,10 @@ router.get('/login', [UserLoginValidator], async (req, res) => {
     await LoginExsistAccount(req, res);
     // res.send(result)
 
+})
+
+router.post('/logout', async (req, res) => {
+    logout(req, res);
 })
 
 

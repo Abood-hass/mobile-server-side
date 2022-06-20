@@ -22,14 +22,15 @@ exports.ReigistNewAccount = (req, res) => {
       data.Gender, data.Governorate, data.Neighborhood, data.HouseNumber, data.NavigationalMark, data.DateOfBirth, token],
       (err, result, rows) => {
         // if (err) result = err;
-        if (err != null) console.log(err.message);
+        if (err != null) res.status(400).end(err.message);
 
       });
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.status(400).json({ errors: errors.array() });
+    } else {
+      res.send(result)
     }
-    res.send(result)
   } catch (err) {
     res.status(400).json({ errors: err });
   }
@@ -40,25 +41,23 @@ exports.ReigistNewAccount = (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-function LoginExsistAccount(err, results) {
+// var LoginExsistAccount = async (err, results, req) => {
 
-  var LoginToken;
+//   let LoginToken;
 
-  if (results[0] === undefined) { console.log("no account found"); return ("no account found") }
-  else {
-    // console.log("rows'", results, "'");
-    var CustomerID = results[0].CustomerID;
-    LoginToken = generateAccessToken({ username: CustomerID });
+//   if (results[0] === undefined) { console.log("no account found"); return ("no account found") }
+//   else {
+//     // console.log("rows'", results, "'");
+//     var CustomerID = results[0].CustomerID;
+//     LoginToken = generateAccessToken({ username: CustomerID });
+//     query =
+//       await "UPDATE `heroku_37bb97e0f5ae5b0`.`customeraccount` SET `token` = ? WHERE (`CustomerID` = ?); ";
+//     con.query(query, [LoginToken, CustomerID])
+//   }
 
-    query =
-      "UPDATE `heroku_37bb97e0f5ae5b0`.`customeraccount` SET `token` = ? WHERE (`CustomerID` = ?); ";
-    con.query(query, [LoginToken, CustomerID])
-  }
-  // console.log("generate Access Token: ",LoginToken);
-  this.theReturn = LoginToken;
-  if (err) throw err;
-  // return (LoginToken);
-}
+//   if (err) throw err;
+//   return (LoginToken);
+// }
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,22 +67,47 @@ exports.LoginExsistAccount = async (req, res) => {
 
   var data = req.body
   // try {
+  var query =
+    "SELECT * FROM heroku_37bb97e0f5ae5b0.customeraccount WHERE email=? AND password=? AND BanStatus='Unbanned' AND (deleted_at IS NULL OR deleted_at='') LIMIT 1";
+  await con.query(query, [data.Email, data.Password],
+    async (err, results) => {
 
+      let LoginToken;
 
+      if (results[0] === undefined) { console.log("no account found"); return ("no account found") }
+      else {
+        // console.log("rows'", results, "'");
+        var CustomerID = results[0].CustomerID;
+        LoginToken = generateAccessToken({ username: CustomerID });
+        query =
+          "UPDATE `heroku_37bb97e0f5ae5b0`.`customeraccount` SET `token` = ? WHERE (`CustomerID` = ?) ";
+        await con.query(query, [LoginToken, CustomerID],
+          async (err, result) => {
+            if (err) res.status(201).json(err);
+            res.status(200).json(LoginToken);
 
-  function quering() {
-    var query =
-      "SELECT * FROM heroku_37bb97e0f5ae5b0.customeraccount WHERE email=? AND password=? and BanStatus='Unbanned'";
-    con.query(query, [data.Email, data.Password],
-      async (err, results) => {
-        await LoginExsistAccount(err, results);
-        if (err) res.status(201).json(err);
-        res.status(200).json(results);
+          })
+
       }
-    )
-  }
-  quering()
 
-  // return this.theReturn;
+      if (err) res.status(201).json(err);
+    }
+
+  )
+
+
+
+
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+exports.logout = async (req, res) => {
+  const CustomerID = req.header('x-CustomerID');
+  query =
+    "UPDATE `heroku_37bb97e0f5ae5b0`.`customeraccount` SET `token` = NULL WHERE (`CustomerID` = ?); ";
+  con.query(query, [CustomerID])
+  res.json("loged out")
 
 }

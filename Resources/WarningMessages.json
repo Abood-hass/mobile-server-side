@@ -13,5 +13,12 @@
     "LOGIN WARNINGS":{
         "Email":"Make Sure Enter Your Email Correctly",
         "Password":"Make Sure Enter Your Password Correctly"
+    },
+    "Database & Node Server":{
+        "DB_Connected":"Database are Connected correctly",
+        "DB_Reconnecting":"Database Reconnecting again",
+        "DB_Error":"Database Disconnected!!",
+        "DB_Connecting":"Database Connecting",
+        "Node_Started": "Node Started"
     }
 }

@@ -1,6 +1,10 @@
 const mysql = require('mysql');
+const { c } = require('smart-console');
 require('dotenv').config()
- let con = mysql.createConnection({
+const WarningMessages = require('../Resources/WarningMessages.json');
+
+
+let con = mysql.createConnection({
   host: process.env.DB_HOST || "us-cdbr-east-05.cleardb.net",
   port: process.env.DB_PORT || 3306,
   user: process.env.DB_USERNAME || "bf866bc64138a1",
@@ -9,28 +13,30 @@ require('dotenv').config()
 });
 
 
-function handleDisconnect () {
-  connection = con; // Recreate the connection, since
-                                                  // the old one cannot be reused.
+ 
 
-  connection.connect(function(err) {              // The server is either down
-    if(err) {                                     // or restarting (takes a while sometimes).
-      console.log('error when connecting to db');
-      setTimeout(handleDisconnect,console.log("Reconnecting to DB"), 2000); // We introduce a delay before attempting to reconnect,
+function handleDisconnect() {
+  con.connect( (err) => {
+    if (err) {
+      c.lR(WarningMessages['Database & Node Server']['DB_Error']);
+      setTimeout(handleDisconnect ,  1000000);
+      c.lY(WarningMessages['Database & Node Server']['DB_Reconnecting'])
     }else{
-      console.log("Database Connected")
-    }                                  // to avoid a hot loop, and to allow our node script to
-  });                                     // process asynchronous requests in the meantime.
-                                          // If you're also serving http, display a 503 error.
-  connection.on('error', function(err) {
-    console.log('db error');
-    if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
-      handleDisconnect();                         // lost due to either server restart, or a
-      console.log("Reconnecting to DB");
-    } else {                                      // connnection idle timeout (the wait_timeout
-      throw err;                                  // server variable configures this)
+      c.lG(WarningMessages['Database & Node Server']['DB_Connected'])
     }
   });
+
+  con.on('error', function (err) {
+    c.lR(WarningMessages['Database & Node Server']['DB_Error']);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      c.lR(WarningMessages['Database & Node Server']['DB_Error']);
+      setTimeout(handleDisconnect ,  1000000);
+      c.lY(WarningMessages['Database & Node Server']['DB_Reconnecting'])
+    } else {
+      throw err;
+    }
+  }
+  );
 }
 
-module.exports = {handleDisconnect, con};
+module.exports = { handleDisconnect, con };
