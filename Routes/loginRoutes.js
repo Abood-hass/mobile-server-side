@@ -44,8 +44,11 @@ const UserLoginValidator = [
         .isLength({ min: 8, max: 15 }),
 ]
 
+router.get('/hi',(req, res) => {
+    res.status(400).json({ "message": "message" });
+})
 
-router.post('/reigister',
+router.post('/register',
     [UserRegistrationValidator],
     async (req, res) => {
         // var data = req.body
@@ -55,7 +58,7 @@ router.post('/reigister',
 
     })
 
-router.get('/login', [UserLoginValidator], async (req, res) => {
+router.post('/login', [UserLoginValidator], async (req, res) => {
     // var result = 
     await LoginExsistAccount(req, res);
     // res.send(result)

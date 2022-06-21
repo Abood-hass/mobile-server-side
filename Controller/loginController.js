@@ -84,7 +84,7 @@ exports.LoginExsistAccount = async (req, res) => {
         await con.query(query, [LoginToken, CustomerID],
           async (err, result) => {
             if (err) res.status(201).json(err);
-            res.status(200).json(LoginToken);
+            res.status(200).json({"LoginToken": LoginToken});
 
           })
 
