@@ -17,6 +17,8 @@ let con = mysql.createConnection(DB_hoster);
  
 
 function handleDisconnect() {
+  try {
+  
   con = mysql.createConnection(DB_hoster);
   con.connect( (err) => {
     if (err) {
@@ -34,10 +36,15 @@ function handleDisconnect() {
       setTimeout(handleDisconnect ,  2000);
       c.lY(WarningMessages['Database & Node Server']['DB_Reconnecting'])
     } else {
-      throw err;
+      setTimeout(handleDisconnect ,  2000);
     }
   }
   );
+    
+} catch (err) {
+  console.log(err.message);
+  setTimeout(handleDisconnect ,  2000);
+}
 }
 
 module.exports = { handleDisconnect, con };

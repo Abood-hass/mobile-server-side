@@ -19,11 +19,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
-
+try {
+ 
 app.use('/user', urlencodedParser, loginsRoutes);
 app.use('/browse', urlencodedParser, browsingRoutes);
 app.use('/order', urlencodedParser, orderMeals);
-
+ 
+} catch (err) {
+    console.log(err);
+}
 function ServerConnect() {
   try {
     app.listen(process.env.PORT,

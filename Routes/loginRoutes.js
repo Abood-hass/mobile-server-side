@@ -44,8 +44,8 @@ const UserLoginValidator = [
         .isLength({ min: 8, max: 15 }),
 ]
 
-router.get('/hi',(req, res) => {
-    res.status(400).json({ "message": "message" });
+router.post('/hi',(req, res) => {
+    res.status(200).json(req.body);
 })
 
 router.post('/register',
