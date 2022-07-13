@@ -1,18 +1,18 @@
 {
     "REGISTRATION WARNINGS":{
-        "FirstName":"First Name length from 3 to 10",
-        "LastName":"Last Name length from 3 to 10",
-        "Email":"Email number should be real Email",
-        "Email2":"Email Already in Use",
-        "Password":"Password length should be 8 to 15 characters",
-        "PhoneNumber1":"First Phone Number length should be 10 and numbers are allowed only",
-        "PhoneNumber2":"Second Phone Number length should be 10 (this number still optional)",
-        "Governorate":"Insert Governorate Correct",
-        "Neighborhood":"Insert Neighborhood Correct"
+        "FirstName":"الإسم الأول يجب ان يكون ع الاقل ثلاث احرف",
+        "LastName":"الأسم الاخير يجب ان يكون ثلاث احرف ",
+        "Email":"الأيميل يجب ان يكون صحيح",
+        "Email2":"هذا الايميل في الاستخدام",
+        "Password":"كلمة السر يجب ان تكون من 8 الى 15 حرف",
+        "PhoneNumber1":"الرقم الاول الزامي ويجب ان يكون 10 ارقام",
+        "PhoneNumber2":"الرقم الثاني  غيرالزامي ولكن يجب ان يكون 10 ارقام",
+        "Governorate":"المحافظة يجب إداخلاها بشكل صحيح",
+        "Neighborhood":"المنطقة يجب إداخلاها بشكل صحيح"
     },
     "LOGIN WARNINGS":{
-        "Email":"Make Sure Enter Your Email Correctly",
-        "Password":"Make Sure Enter Your Password Correctly"
+        "Email":"أدخل الايميل الصحيح للحساب",
+        "Password":"كلمة السر خاظئة"
     },
     "Database & Node Server":{
         "DB_Connected":"Database are Connected correctly",
