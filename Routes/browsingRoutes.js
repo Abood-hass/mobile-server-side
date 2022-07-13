@@ -1,5 +1,5 @@
 const { router } = require('../app');
-const { showAllRestaurants, showRestaurantsMenusAndMeals, showSpecifyMeal } = require('../Controller/browsingController');
+const { showAllRestaurants, showRestaurantsMenusAndMeals, showSpecifyMeal, showAllMeal } = require('../Controller/browsingController');
 const { tokenAuthentication } = require('../Middleware/auth');
 
 
@@ -22,4 +22,7 @@ router.get('/restaurant/:RId/:MealID',
     showSpecifyMeal(res, req);
 })
 
+router.get("/meals",(req, res) => {
+    showAllMeal(req, res) 
+})
 module.exports = router;

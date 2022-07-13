@@ -9,7 +9,7 @@ exports.router = express.Router();
 const loginsRoutes = require('./Routes/loginRoutes')
 const browsingRoutes = require('./Routes/browsingRoutes');
 const { handleDisconnect } = require('./DB/dbConnection');
-const { orderMeals } = require('./Controller/orderingController');
+const orderingRoutes = require('./Routes/orderingRoutes');
 const { c } = require('smart-console');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,7 +23,7 @@ try {
  
 app.use('/user', urlencodedParser, loginsRoutes);
 app.use('/browse', urlencodedParser, browsingRoutes);
-app.use('/order', urlencodedParser, orderMeals);
+app.use('/order', urlencodedParser, orderingRoutes);
  
 } catch (err) {
     console.log(err);

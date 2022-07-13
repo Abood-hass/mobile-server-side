@@ -1,6 +1,4 @@
 const { con } = require("../DB/dbConnection");
-const { check, validationResult } = require('express-validator');
-const WarningMessages = require('../Resources/WarningMessages.json');
 
 exports.CheckerEmail = (Email, Exsistant) => {
     global.Return;

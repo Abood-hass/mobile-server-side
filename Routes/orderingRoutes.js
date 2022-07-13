@@ -1,10 +1,18 @@
 const { router } = require('../app');
-const { orderMeals } = require('../Controller/orderingController');
+const { orderMeals, showPrevoiusOrder } = require('../Controller/orderingController');
 const { tokenAuthentication } = require('../Middleware/auth');
 
 
-router.post('/', tokenAuthentication,(res, req) => {
+router.post('/orderingMeal', 
+// tokenAuthentication,
+(req, res) => {
     orderMeals(req, res);
 })
+
+router.post('/showOrders',
+(req, res) => {
+    showPrevoiusOrder(req, res)
+})
+
 
 module.exports = router;

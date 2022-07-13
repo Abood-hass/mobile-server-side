@@ -23,8 +23,10 @@ function handleDisconnect() {
   con.connect( (err) => {
     if (err) {
       c.lR(WarningMessages['Database & Node Server']['DB_Error']);
-      setTimeout(handleDisconnect ,  2000);
-      c.lY(WarningMessages['Database & Node Server']['DB_Reconnecting'])
+      setTimeout(handleDisconnect,
+        c.lY(WarningMessages['Database & Node Server']['DB_Reconnecting']) ,
+          2000);
+      // c.lY(WarningMessages['Database & Node Server']['DB_Reconnecting'])
     }else{
       c.lG(">>>>>>>>> "+WarningMessages['Database & Node Server']['DB_Connected'])
     }
@@ -32,12 +34,14 @@ function handleDisconnect() {
 
   con.on('error', function (err) {
     c.lR(WarningMessages['Database & Node Server']['DB_Error']);
-    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-      setTimeout(handleDisconnect ,  2000);
-      c.lY(WarningMessages['Database & Node Server']['DB_Reconnecting'])
-    } else {
-      setTimeout(handleDisconnect ,  2000);
-    }
+    // if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      setTimeout(handleDisconnect,
+        c.lY(WarningMessages['Database & Node Server']['DB_Reconnecting'])
+        ,  2000);
+      
+    // } else {
+    //   setTimeout(handleDisconnect ,  2000);
+    // }
   }
   );
     
